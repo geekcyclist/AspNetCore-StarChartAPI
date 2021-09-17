@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using StarChart.Data;
 using StarChart.Models;
 
@@ -45,6 +46,18 @@ namespace StarChart.Controllers
             {
                 AddSatellites(celestialObject);
             }
+            return new OkObjectResult(celestialObjects.ToList());
+        }
+
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            var celestialObjects = _context.CelestialObjects;
+            foreach (var celestialObject in celestialObjects)
+            {
+                AddSatellites(celestialObject);
+            }
+
             return new OkObjectResult(celestialObjects.ToList());
         }
 
