@@ -85,7 +85,38 @@ namespace StarChart.Controllers
             _context.SaveChanges();
 
             return NoContent();
+        }
 
+        [HttpPatch("{id}/{name}")]
+        public IActionResult RenameObject(int id, string name)
+        {
+            var co = _context.CelestialObjects.FirstOrDefault(c => c.Id == id);
+            if (co == null)
+            {
+                return NotFound();
+            }
+
+            co.Name = name;
+            _context.Update(co);
+            _context.SaveChanges();
+            
+            return NoContent();
+        }
+
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            var co = _context.CelestialObjects.FirstOrDefault(c => c.Id == id);
+            if (co == null)
+            {
+                return NotFound();
+            }
+
+            _context.Remove(co);
+            _context.SaveChanges();
+
+            return NoContent();
         }
 
         private void AddSatellites(CelestialObject co)
